@@ -1,0 +1,52 @@
+' ============================================================
+' Conversor Binário — VB6
+' Desenvolvido em 2012 durante estudos de curso técnico em redes
+' ============================================================
+
+' Converte um caractere para binário
+' Entrada: txt.Text (campo de texto com o caractere)
+' Saída: numbin (string com o valor binário)
+Function CharParaBinario(caractere As String) As String
+    Dim resto As Single, valor As Single
+    Dim bininvert As String, quantnum As Integer
+    Dim numbin As String, n As Integer
+
+    resto = Asc(caractere)
+    valor = Asc(caractere)
+    bininvert = ""
+
+    Do
+        resto = (resto Mod 2)
+        valor = (valor \ 2)
+        bininvert = bininvert & resto
+        resto = valor
+    Loop While valor > 1
+    bininvert = bininvert & valor
+
+    quantnum = Len(bininvert)
+    For n = 0 To (quantnum - 1)
+        numbin = numbin & Mid(bininvert, (quantnum - n), 1)
+    Next
+
+    CharParaBinario = numbin
+End Function
+
+' ============================================================
+
+' Converte binário de volta para caractere
+' Entrada: numbin (string com o valor binário)
+' Saída: Chr() com o caractere original
+Function BinarioParaChar(numbin As String) As String
+    Dim quantnum As Integer, bimmult As Integer
+    Dim numasc As Long, n As Integer
+
+    quantnum = Len(numbin)
+    For n = 0 To (quantnum - 1)
+        bimmult = Mid(numbin, (quantnum - n), 1)
+        If bimmult = 1 Then
+            numasc = numasc + (bimmult * (2 ^ n))
+        End If
+    Next
+
+    BinarioParaChar = Chr(numasc)
+End Function
